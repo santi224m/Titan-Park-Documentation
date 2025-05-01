@@ -9,33 +9,33 @@ skinparam arrowColor #333333
 skinparam nodesep 100
 
 package "Mobile Client Apps" {
-  MOBILE "iOS Client" as ios
   MOBILE "Android Client" as android
+  MOBILE "iOS Client" as ios
 }
 
 cloud "Cloud Infrastructure" {
     [API Gateway] as gateway
-  
+
   package "Microservices" {
-    package "Authentication" as authServicePkg {
-      [Authentication Service] as authService
-      DATABASE "Auth DB" as authDB
+    package "Uptime Monitor" as uptimeMonitorServicePkg {
+      [Uptime Monitor Service] as uptimeMonitorService
+      DATABASE "Uptime DB" as uptimeDB
+    }
+
+    package "Parking " as parkingServicePkg {
+      [Parking Service] as parkingService
+      DATABASE "Parking DB" as parkingDB
     }
 
     package "Credit" as creditServicePkg {
       [Credit Service] as creditService
       DATABASE "Credit DB" as creditDB
     }
-    
-    package "Parking " as parkingServicePkg {
-      [Parking Service] as parkingService
-      DATABASE "Parking DB" as parkingDB
-    }
-    
-    package "Uptime Monitor" as uptimeMonitorServicePkg {
-      [Uptime Monitor Service] as uptimeMonitorService
-      DATABASE "Uptime DB" as uptimeDB
-    }
+
+    package "Authentication" as authServicePkg {
+      [Authentication Service] as authService
+      DATABASE "Auth DB" as authDB
+    }    
   }
 }
 

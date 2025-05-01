@@ -1,0 +1,49 @@
+@startuml
+!theme sketchy-outline
+skinparam componentStyle uml2
+skinparam componentBackgroundColor #F8F8F8
+skinparam componentBorderColor #333333
+skinparam databaseBackgroundColor #E0E0E0
+skinparam interfaceBackgroundColor #C0FFFF
+skinparam arrowColor #333333
+skinparam linetype ortho
+
+' Authentication Service Diagram'
+package "Authentication Service" {
+  [API Controller] as controller
+  [Authentication Manager] as authManager
+  [User Manager] as userManager
+  [Session Manager] as sessionManager
+  
+  interface "REST API" as restApi
+}
+
+' Authentication Database'
+database "Auth DB" {
+  [User Table] as userTable
+  [Sessions Table] as sessionsTable
+}
+
+' Relationships'
+[API Gateway] --> restApi
+restApi - controller
+
+' Level 1 - Controller to Managers'
+controller --> authManager
+controller --> sessionManager
+controller --> userManager
+
+userManager --> userTable
+authManager --> userTable
+sessionManager --> sessionsTable
+
+
+note bottom of authManager
+  Handles JWT token generation
+  and validation
+end note
+note right of userManager
+  Manages user data such
+  as registration and profile
+end note
+@enduml
