@@ -1,0 +1,23 @@
+@startuml Components_Admin_Web_App
+!include <C4/C4_Container>
+!include <C4/C4_Component>
+
+Person(system_admin, "TitanPark Administrator")
+Container(api_gateway, "API Gateway", "Service")
+Container(uptime_monitor, "Uptime Monitor", "Service")
+ContainerDb(admin_db, "Administration Database", "Database")
+
+Container_Boundary(admin_web_app, "TitanPark Admin Web App") {
+  Component(admin_auth, "Authentication", "Component", "Handles administrator authentication and authorization.")
+  Component(uptime_monitor_comp, "Uptime Monitor Component", "Component", "Handles uptime statistics and API endpoint configuration.")
+  Component(user_management_comp, "User Management Component", "Component", "Allows admin to ban problematic users.")
+}
+
+Rel_D(admin_auth, admin_db, "Read/write adminstrator credentials", "ODBC")
+Rel_U(admin_auth, system_admin, "Authenticates", "HTTPS")
+Rel_D(uptime_monitor_comp, uptime_monitor, "Gets uptime statistics for each microservice", "HTTPS")
+Rel_D(uptime_monitor_comp, admin_db, "Reads/writes API endpoints", "ODBC")
+Rel_U(uptime_monitor_comp, system_admin, "Displays uptime statistics", "HTTPS")
+Rel_D(user_management_comp, api_gateway, "Access authentication system to manage student accounts", "HTTPS")
+Rel_D(user_management_comp, system_admin, "Displays student accounts", "HTTPS")
+@enduml
