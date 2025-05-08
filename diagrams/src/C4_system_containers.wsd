@@ -1,0 +1,47 @@
+@startuml System_Containers_C4
+!include <C4/C4_Container>
+
+' People '
+Person(anon_user, "Anonymous User", "Anybody on the web.")
+Person(csuf_student, "CSUF Student", "A student with a TitanPark account.")
+Person(system_admin, "TitanPark Administrator", "A TitanPark system administrator user.")
+
+' TitanPark System '
+System_Boundary(titanpark_container, "TitanPark Boundary") {
+  Container(android_app, "TitanPark Android App", "Android Application", "Allows students to view, list and buy parking spaces.")
+  Container(ios_app, "TitanPark iOS App", "iOS Application", "Allows students to view, list and buy parking spaces.")
+  Container(admin_web_app, "TitanPark Admin Web App", "Web Application", "Allows administrators to manage accounts, complaints, and check uptime monitor.")
+  Container(api_gateway, "API Gateway", "Service", "Handles all requests to the microservices.")
+  Container(auth_system, "Authentication System", "Service", "Handles user authentication and authorization.")
+  Container(credit_system, "Credit System", "Service", "Handles user credits and transactions.")
+  Container(parking_system, "Parking System", "Service", "Handles parking space listings and pricing.")
+  Container(uptime_monitor, "Uptime Monitor", "Service", "Monitors the uptime of the TitanPark system.")
+  ContainerDb(auth_db, "Authentication Database", "Database", "Stores user credentials and authentication tokens.")
+  ContainerDb(credit_db, "Credit Database", "Database", "Stores user credits and transaction history.")
+  ContainerDb(parking_db, "Parking Database", "Database", "Stores parking space listings.")
+  ContainerDb(uptime_db, "Uptime Database", "Database", "Stores system uptime data.")
+}
+
+' External Systems '
+System_Ext(csuf_parking_services, "CSUF Parking and Transportation Services", "Availabile Parking Spaces Web Page.")
+
+' Relationships '
+Rel_D(anon_user, android_app, "Uses", "HTTPS")
+Rel_D(anon_user, ios_app, "Uses", "HTTPS")
+Rel_D(csuf_student, android_app, "Uses", "HTTPS")
+Rel_D(csuf_student, ios_app, "Uses", "HTTPS")
+Rel_D(system_admin, admin_web_app, "Uses", "HTTPS")
+Rel_D(android_app, api_gateway, "Interacts with", "HTTPS")
+Rel_D(ios_app, api_gateway, "Interacts with", "HTTPS")
+Rel_D(admin_web_app, api_gateway, "Interacts with", "HTTPS")
+Rel_D(admin_web_app, uptime_monitor, "Gets uptime statistics", "HTTPS")
+Rel_L(uptime_monitor, api_gateway, "Pings", "HTTPS")
+Rel_D(api_gateway, auth_system, "Checks user credentials and retrieves JWT token", "HTTPS")
+Rel_D(api_gateway, credit_system, "Cheks user balance and updates it after transactions", "HTTPS")
+Rel_D(api_gateway, parking_system, "Adds/removes parking spots and retrieves current parkings spots", "HTTPS")
+Rel_D(auth_system, auth_db, "Reads/writes data", "ODBC")
+Rel_D(credit_system, credit_db, "Reads/writes data", "ODBC")
+Rel_D(parking_system, parking_db, "Reads/writes data", "ODBC")
+Rel_D(uptime_monitor, uptime_db, "Reads/writes data", "ODBC")
+Rel_D(parking_system, csuf_parking_services, "Checks currently available parking spots", "HTTPS")
+@enduml

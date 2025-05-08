@@ -1,9 +1,9 @@
 # Titan Park Documentation
 
-## Microservice Architecture Design
+## Level 1: System Context
 
-![image](/diagrams/out/microservice_architecture.png)
+![image](./diagrams/out/System_Context_C4.png)
 
-### Authentication Service
+## Level 2: Containers
 
-![image](/diagrams/out/authentication_service.png)
+![image](./diagrams/out/System_Containers_C4.png)
