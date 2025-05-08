@@ -1,0 +1,18 @@
+@startuml System_Context_C4
+!include <C4/C4_Context>
+
+' People '
+Person(anon_user, "Anonymous User", "Anybody on the web.")
+Person(csuf_student, "CSUF Student", "A student with a TitanPark account.")
+Person(system_admin, "TitanPark Administrator", "A TitanPark system administrator user.")
+
+' Systems '
+System(titanpark, "TitanPark", "Student-to-Student Parking Marketplace for CSUF.")
+System_Ext(csuf_parking_services, "CSUF Parking and Transportation Services", "Availabile Parking Spaces Web Page.")
+
+' Relationships '
+Rel_D(anon_user, titanpark, "", "", "View available parking spaces and their prices.")
+Rel_D(csuf_student, titanpark, "", "", "Views, lists, and buys parking spaces.")
+Rel_D(system_admin, titanpark, "", "", "Manage accounts, complaints, and checks uptime monitor.")
+Rel_D(titanpark, csuf_parking_services, "", "", "Visits page and gets available parking spots for all parking structures.")
+@enduml
