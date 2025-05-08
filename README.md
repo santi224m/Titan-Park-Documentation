@@ -18,7 +18,7 @@ Below are some guides to get familiar with the C4 model, PlantUML, and microserv
 - [Microservices](https://martinfowler.com/articles/microservices.html) - Martin Fowler blog explaining what microservices are
 - [Drawing UML with PlantUML](https://plantuml.com/guide) - PlantUML guide
 - [C4-PlantUML](https://github.com/plantuml-stdlib/C4-PlantUML) - Documentation for using C4 library in PlantUML
-- [Visualising software architecture](https://static.codingthearchitecture.com-visualising-software-architecture.pdf) - C4 model guide + example
+- [Visualising software architecture](https://static.codingthearchitecture.com/visualising-software-architecture.pdf) - C4 model guide + example
 - [YouTube: The Art of Visualising Software Architecture (Simon Brown)](https://www.youtube.com/watch?v=zcmU-OE452k) - Creator of C4 model explains what C4 model is
 
 ## Contributing
