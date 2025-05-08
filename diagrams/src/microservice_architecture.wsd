@@ -1,8 +1,6 @@
-@startuml
-!theme sketchy-outline
-!define RECTANGLE class
+@startuml System_Architecture
 !define DATABASE database
-!define MOBILE component
+!define MOBILE node
 
 skinparam packageStyle rectangle
 skinparam arrowColor #333333
@@ -13,15 +11,14 @@ package "Mobile Client Apps" {
   MOBILE "iOS Client" as ios
 }
 
+package "System Administration" {
+  MOBILE "Web Browser" as adminBrowser
+}
+
 cloud "Cloud Infrastructure" {
-    [API Gateway] as gateway
+  [API Gateway] as gateway
 
   package "Microservices" {
-    package "Uptime Monitor" as uptimeMonitorServicePkg {
-      [Uptime Monitor Service] as uptimeMonitorService
-      DATABASE "Uptime DB" as uptimeDB
-    }
-
     package "Parking " as parkingServicePkg {
       [Parking Service] as parkingService
       DATABASE "Parking DB" as parkingDB
@@ -35,23 +32,32 @@ cloud "Cloud Infrastructure" {
     package "Authentication" as authServicePkg {
       [Authentication Service] as authService
       DATABASE "Auth DB" as authDB
-    }    
+    }
+
+  }
+}
+
+cloud "Monitoring Tools" {
+  package "Uptime Monitor" as uptimeMonitorServicePkg {
+    [Uptime Monitor Service] as uptimeMonitorService
+    DATABASE "Uptime DB" as uptimeDB
   }
 }
 
 /'Clients to API Gateway'/
-ios --> gateway
-android --> gateway
+ios <--> gateway
+android <--> gateway
+adminBrowser <--> uptimeMonitorService
 
 /'API Gateway to services'/
-gateway --> authService
-gateway --> creditService
-gateway --> parkingService
-gateway --> uptimeMonitorService
+gateway <--> authService
+gateway <--> creditService
+gateway <--> parkingService
+gateway <--> uptimeMonitorService
 
 /'Services to their databases'/
-authService --> authDB
-creditService --> creditDB
-parkingService --> parkingDB
-uptimeMonitorService --> uptimeDB
+authService <--> authDB
+creditService <--> creditDB
+parkingService <--> parkingDB
+uptimeMonitorService <--> uptimeDB
 @enduml
