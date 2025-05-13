@@ -1,0 +1,23 @@
+@startuml use_cases_admin
+left to right direction
+
+rectangle "TitanPark Admin Web App" {
+  usecase "Check TitanPark uptime" as check_uptime
+  usecase "Check TitanPark average response time" as check_response_time
+  usecase "Ban student account" as ban_student
+  usecase "Unban student account" as unban_student
+  usecase "Create TitanPark admin account" as create_admin
+  usecase "Delete TitanPark admin account" as delete_admin
+  usecase "Check TitanPark revenue" as check_revenue
+}
+
+actor "TitanPark Admin" as admin
+
+admin --> check_uptime
+admin --> check_response_time
+admin --> ban_student
+admin --> unban_student
+admin --> create_admin
+admin --> delete_admin
+admin --> check_revenue
+@enduml
