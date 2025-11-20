@@ -1,0 +1,33 @@
+@startuml parking_system_erd_diagram
+' Parking listing
+entity "Listing" as listing {
+  *id : uuid
+  *user_id : text <<firebase id>>
+  *post_date : datetime
+  *price : int
+  *structure_id : int
+  *floor : number
+  *vehicle_id : number
+  *comment : text
+}
+
+' Parking structure
+entity "Parking Structure" as parking_structure {
+  *id : int <sequential>
+  *name : text
+}
+' Each listing has a parking structure
+listing ||..|{ parking_structure
+
+' Student Vehicle
+entity "Vehicle" as vehicle {
+  *id : uuid
+  *make : text
+  *model : text
+  *year : number
+  *color : text
+  *license_plate : text
+}
+' Each listing has a vehicle
+listing ||..|| vehicle
+@endum
